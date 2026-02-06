@@ -1,0 +1,5 @@
+- name: Nginx via role
+  hosts: servers
+  become: true
+  roles:
+    - nginxSample
