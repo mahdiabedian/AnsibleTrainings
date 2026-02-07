@@ -26,6 +26,12 @@
         url: http://{{ansible_host}}/
         status_code: 200
       tags: deploy
+    - name: Ensure db_password is defined.
+      assert:
+        that:
+          - db_password is defined
+      when: "'prod' in group_names"
+      tags: deploy
   rescue:
     - name: Rollback index
       copy:

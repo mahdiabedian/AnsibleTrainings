@@ -1,0 +1,3 @@
+nginx_page_title: "DEV - My Lab"
+nginx_page_message: "Hello from DEV"
+nginx_service_action: "restarted"

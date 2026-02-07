@@ -1,10 +1,10 @@
 - name: Nginx via role
-  hosts: servers
+  hosts: all
   serial: 1
   max_fail_percentage: 0
   become: true
-  vars:
-    nginx_page_title: "My DevOps Lab"
-    nginx_page_message: "Welcome to"
+    #vars:
+    #nginx_page_title: "My DevOps Lab"
+    #nginx_page_message: "Welcome to"
   roles:
     - nginxSample

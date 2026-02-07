@@ -1,0 +1,3 @@
+nginx_page_title: "PROD - My Service"
+nginx_page_message: "Welcome to PROD"
+nginx_service_action: "reloaded"

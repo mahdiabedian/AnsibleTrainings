@@ -1,8 +1,8 @@
-- name: Reload Nginx
+- name: Apply Nginx Action
   listen: nginx changed
   service:
     name: nginx
-    state: reloaded
+    state: "{{nginx_service_action}}"
       #- name: Restart Nginx
   #  listen: nginx changed
     #  service:
