@@ -5,13 +5,16 @@
         src: /var/www/html/index.nginx-debian.html
         dest: /var/www/html/index.nginx-debian.html.bak
         remote_src: true
+        owner: www-data
+        group: www-data
+        mode: "0644"
     - name: Install Nginx
       apt:
         name: nginx
         state: present
-        update_cache: yes
+        update_cache: true
         cache_valid_time: 3000
-      tags: [install,deploy]
+      tags: [install, deploy]
     - name: Sample HTML template
       template:
         src: index.html.j2
@@ -20,10 +23,10 @@
         group: www-data
         mode: '0644'
       notify: nginx changed
-      tags: [page,deploy]
+      tags: [page, deploy]
     - name: Health check
       uri:
-        url: http://{{ansible_host}}/
+        url: http://{{ ansible_host }}/
         status_code: 200
       tags: deploy
     - name: Ensure db_password is defined.
@@ -38,4 +41,7 @@
         src: /var/www/html/index.nginx-debian.html.bak
         dest: /var/www/html/index.nginx-debian.html
         remote_src: true
+        owner: www-data
+        group: www-data
+        mode: "0644"
       notify: nginx changed

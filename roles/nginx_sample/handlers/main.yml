@@ -2,8 +2,8 @@
   listen: nginx changed
   service:
     name: nginx
-    state: "{{nginx_service_action}}"
-      #- name: Restart Nginx
+    state: "{{ nginx_service_action }}"
+      # - name: Restart Nginx
   #  listen: nginx changed
     #  service:
     #    name: nginx
