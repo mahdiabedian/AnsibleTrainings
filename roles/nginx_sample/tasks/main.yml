@@ -74,6 +74,20 @@
         name: nginx
         state: started
       when: nginx_active.stdout != "active"
+    - name: Check services status
+      command: systemctl is-active {{ item }}
+      register: services_status
+      changed_when: false
+      loop:
+        - nginx
+        - ssh
+    - name: Start inactive services
+      service:
+        name: "{{ item.item }}"
+        state: started
+      loop: "{{ services_status.results }}"
+      when: item.stdout != "active"
+
   rescue:
     - name: Rollback index
       copy:
