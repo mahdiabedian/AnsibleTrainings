@@ -62,6 +62,18 @@
         - { name: devuser, shell: /bin/bash, sudo: true }
         - { name: opsuser, shell: /bin/zsh, sudo: false }
       when: item.sudo
+    - name: Check Nginx Status
+      command: systemctl is-active nginx
+      register: nginx_active
+      changed_when: false
+    - name: Show nginx status
+      debug:
+        msg: "Nginx is {{ nginx_active.stdout }}"
+    - name: Start nginx if not active!
+      service:
+        name: nginx
+        state: started
+      when: nginx_active.stdout != "active"
   rescue:
     - name: Rollback index
       copy:
