@@ -3,7 +3,10 @@
   serial: 1
   max_fail_percentage: 0
   become: true
-    # vars:
+  vars:
+    nginx_features:
+      - headers
+      - rate_limit
     # nginx_page_title: "My DevOps Lab"
     # nginx_page_message: "Welcome to"
   roles:

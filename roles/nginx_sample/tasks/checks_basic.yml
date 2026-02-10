@@ -1,0 +1,5 @@
+- name: Basic health check
+  uri:
+    url: "http://{{ ansible_host }}/"
+    status_code: 200
+  tags: deploy

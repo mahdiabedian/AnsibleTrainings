@@ -22,3 +22,7 @@
     mode: "0644"
   notify: nginx changed
   tags: [page, deploy]
+- name: Apply optional nginx features
+  include_tasks: "features/{{ item }}.yml"
+  loop: "{{ nginx_features | default([]) }}"
+  tags: deploy

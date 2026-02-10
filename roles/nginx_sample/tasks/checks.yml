@@ -1,8 +1,5 @@
 - name: Strict health check
-  uri:
-    url: "http://{{ ansible_host }}/"
-    status_code: 200
-  when: strict_health_check | default(false)
+  include_tasks: "checks_{{ strict_health_check | default(false) | ternary('strict','basic') }}.yml"
   tags: deploy
 - name: Ensure db_password is defined
   assert:
