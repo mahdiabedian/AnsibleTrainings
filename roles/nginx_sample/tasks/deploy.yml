@@ -1,0 +1,24 @@
+- name: Backup Nginx index
+  copy:
+    src: /var/www/html/index.nginx-debian.html
+    dest: /var/www/html/index.nginx-debian.html.bak
+    remote_src: true
+    owner: www-data
+    group: www-data
+    mode: "0644"
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+    update_cache: true
+    cache_valid_time: 3000
+  tags: [install, deploy]
+- name: Sample HTML template
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.nginx-debian.html
+    owner: www-data
+    group: www-data
+    mode: "0644"
+  notify: nginx changed
+  tags: [page, deploy]

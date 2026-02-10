@@ -1,0 +1,17 @@
+- name: Create users
+  user:
+    name: "{{ item.name }}"
+    shell: "{{ item.shell }}"
+  loop:
+    - {name: devuser, shell: /bin/bash, sudo: true}
+    - {name: opsuser, shell: /bin/zsh, sudo: false}
+- name: Add sudo users
+  copy:
+    dest: "/etc/sudoers.d/{{ item.name }}"
+    content: "{{ item.name }} ALL=(ALL) NOPASSWD:ALL"
+    mode: "0440"
+    validate: "visudo -cf %s"
+  loop:
+    - {name: devuser, shell: /bin/bash, sudo: true}
+    - {name: opsuser, shell: /bin/zsh, sudo: false}
+  when: item.sudo

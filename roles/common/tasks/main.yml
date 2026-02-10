@@ -1,0 +1,36 @@
+- name: Install utilities
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3000
+  loop:
+    - curl
+    - htop
+    - net-tools
+  when: item != 'htop' or 'dev' in group_names
+- name: Check Nginx Status
+  command: systemctl is-active nginx
+  register: nginx_active
+  changed_when: false
+- name: Show nginx status
+  debug:
+    msg: "Nginx is {{ nginx_active.stdout }}"
+- name: Start nginx if not active!
+  service:
+    name: nginx
+    state: started
+  when: nginx_active.stdout != "active"
+- name: Check services status
+  command: systemctl is-active {{ item }}
+  register: services_status
+  changed_when: false
+  loop:
+    - nginx
+    - ssh
+- name: Start inactive services
+  service:
+    name: "{{ item.item }}"
+    state: started
+  loop: "{{ services_status.results }}"
+  when: item.stdout != "active"

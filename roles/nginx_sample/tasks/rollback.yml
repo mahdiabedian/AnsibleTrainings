@@ -1,0 +1,9 @@
+- name: Rollback index
+  copy:
+    src: /var/www/html/index.nginx-debian.html.bak
+    dest: /var/www/html/index.nginx-debian.html
+    remote_src: true
+    owner: www-data
+    group: www-data
+    mode: "0644"
+  notify: nginx changed

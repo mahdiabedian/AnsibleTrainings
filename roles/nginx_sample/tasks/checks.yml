@@ -1,0 +1,12 @@
+- name: Strict health check
+  uri:
+    url: "http://{{ ansible_host }}/"
+    status_code: 200
+  when: strict_health_check | default(false)
+  tags: deploy
+- name: Ensure db_password is defined
+  assert:
+    that:
+      - db_password is defined
+  when: "'prod' in group_names"
+  tags: deploy
